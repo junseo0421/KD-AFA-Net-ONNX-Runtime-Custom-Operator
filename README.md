@@ -36,11 +36,6 @@ PyTorch AFA module
 → Confirm all major operators run on CUDAExecutionProvider
 ```
 
-Final acceleration result:
-- CPU custom op / hybrid execution: about 42 ms
-- CUDA custom op with AFA on GPU: about 16 ms
-- CUDA custom op with Pad removed: about 5.97 ms
-
 ---
 
 ## Environment
@@ -60,11 +55,15 @@ The ONNX Runtime C++ package version must match the Python ONNX Runtime version.
 
 For example, if Python uses:
 
+```
 onnxruntime-gpu==1.23.2
+```
 
 then the C++ package should also be:
 
+```
 onnxruntime-win-x64-1.23.2
+```
 
 ---
 
@@ -255,8 +254,8 @@ The CUDA custom op preserves the original AFA operation with only small floating
 
 ---
 
-## Benchmark Results
-# CPU Custom Op / Hybrid Execution
+## Runtime Verification Results
+### CPU Custom Op / Hybrid Execution
 
 Before moving AFA to CUDA, AFA was executed by the CPU custom op. Other ONNX operators could run on CUDA or TensorRT, but the AFA node caused CPU fallback and GPU-CPU memory transfer.
 
@@ -281,10 +280,6 @@ This means that AFA was still on CPU and caused device-host memory copy overhead
 ## CUDA Custom Op Before Pad Removal
 
 After implementing the CUDA custom op:
-
-```
-[ONNXRuntime-CUDA-Custom] average: 16.252 ms
-```
 
 Provider summary:
 
@@ -412,7 +407,6 @@ CPU custom op was implemented using ONNX Runtime C++ API.
 CUDA custom op was implemented using cuFFT and CUDA kernels.
 PyTorch and ONNX Runtime outputs were verified to match.
 Provider profiling confirmed that AFA and other major operators run on CUDAExecutionProvider.
-Average inference time improved from about 42 ms to about 5.97 ms after CUDA custom op and Pad removal.
 ```
 
 This demonstrates that KD-AFA-Net can preserve its original FFT-based AFA module while being executed in an ONNX Runtime GPU environment.
