@@ -25,7 +25,8 @@ PyTorch AFA module
 ---
 
 ## Overall Workflow
-```Default ONNX export fails
+```
+Default ONNX export fails
 → Wrap AFA as kdafa::AFA custom ONNX operator
 → Export ONNX graph with custom AFA nodes
 → Implement CPU custom op
@@ -277,7 +278,7 @@ This means that AFA was still on CPU and caused device-host memory copy overhead
 
 ---
 
-## CUDA Custom Op Before Pad Removal
+### CUDA Custom Op Before Pad Removal
 
 After implementing the CUDA custom op:
 
@@ -299,7 +300,7 @@ AFA was successfully executed on CUDA, but decoder Pad still caused CPU fallback
 
 ---
 
-## CUDA Custom Op After Pad Removal
+### CUDA Custom Op After Pad Removal
 
 For fixed input size, unnecessary decoder Pad operations were removed. This removed CPU fallback.
 
